@@ -4,19 +4,22 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="/src/script.js"></script>
 </head>
 <body class="h-screen w-screen flex items-center justify-center">
-	<form action="create.php" method="POST" class="fixed top-5 left-5">
+	<form id="createTable" onsubmit="createTable(event)" class="fixed top-5 left-5">
 		<button type="submit" name="create_table" class="bg-blue-400 rounded-md h-8 w-28">テーブル作成</button>
 	</form>
-	<form action="clear.php" method="POST" class="fixed top-16 left-5">
-		<button type="submit" name="clear_table" class="bg-red-400 rounded-md h-8 w-28">データ削除</button>
+	<form id="clearTable" onsubmit="clearTable(event)" class="fixed top-14 left-5">
+		<button type="submit" name="clearTable" class="bg-red-400 rounded-md h-8 w-28">データ削除</button>
 	</form>
+	<span id="createSuccess" class="flex"></span>
+	<span id="createError" class="flex"></span>
 	<input type="radio" name="login" id="login" class="hidden peer/login" checked>
 	<div class="peer-checked/login:block hidden h-[20%] w-[45%] bg-gray-300 p-5 relative">
 		<div>ログイン</div>
 		<div class="absolute top-[55%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-right">
-			<form action="login.php" method="POST">
+			<form id="loginForm" onsubmit="loginForm(event)">
 				<div class="h-6 text-center flex justify-between my-2">
 					<div class="text-center grow">ID</div>
 					<input type="text" id="username" name="username" required class="">
@@ -29,6 +32,7 @@
 					<input type="submit" value="ログイン">
 				</div>
 			</form>
+			<div id="errorMessage"></div>
 			<label for="register" class="block mt-2 underline cursor-pointer text-gray-600">新規登録</label>
 		</div>
 	</div>
@@ -36,7 +40,7 @@
 	<div class="peer-checked/register:block hidden h-[20%] w-[45%] bg-gray-300 p-5 relative">
 		<div>新規登録</div>
 		<div class="absolute top-[55%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-right">
-			<form action="create_user.php" method="POST">
+			<form id="createUser" onsubmit="createUser(event)">
 				<div class="h-6 text-center flex justify-between my-2">
 					<div class="text-center grow">ID</div>
 					<input type="text" id="username" name="username" required class="">
@@ -49,6 +53,8 @@
 					<input type="submit" value="登録">
 				</div>
 			</form>
+			<div id="errorMessage"></div>
+			<div id="successMessage"></div>
 			<label for="login" class="block mt-2 underline cursor-pointer text-gray-600">ログイン</label>
 		</div>
 	</div>

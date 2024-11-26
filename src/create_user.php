@@ -1,17 +1,16 @@
 <?php
-require './vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-require __DIR__.'/vendor/autoload.php';
-Dotenv\Dotenv::createImmutable(__DIR__)->load();
+Dotenv\Dotenv::createImmutable(__DIR__ . '/../')->load();
 
 $host = 'localhost';
 $dbname = 'kensyuu';
-$user = 'test';
-$pass = 'test';
+$db_user = 'test';
+$db_pass = 'test';
 
 try
 {
-	$pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+	$pdo = new PDO("mysql:host=$host;dbname=$dbname", $db_user, $db_pass);
 }
 catch (PDOException $e)
 {
@@ -33,15 +32,22 @@ try
 	$stmt->execute([$username, $hashed_ps, $username]);
 	if ($stmt->rowCount() > 0)
 	{
-		echo "Successfully inserted data";
+		echo json_encode([
+			"success" => true,
+		]);
 	}
 	else
 	{
-		echo "username is already in use";
+		echo json_encode([
+				"success" => false,
+			]);
 	}
 }
 catch (PDOException $e)
 {
-	echo "登録に失敗しました: " . $e->getMessage();
+	echo json_encode([
+		"success" => false,
+		"error" => $e->getMessage()
+	]);
 }
 ?>
